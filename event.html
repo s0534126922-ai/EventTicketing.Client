@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventTicketing | בחירת מקום</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+</head>
+<body>
+    <header id="site-header"></header>
+
+    <main class="container page-section">
+        <div class="page-heading">
+            <a href="index.html" class="text-link">
+                חזרה לכל האירועים
+            </a>
+        </div>
+
+        <div id="page-message" hidden></div>
+
+        <div id="event-content" class="event-details" hidden>
+            <section class="panel">
+                <div class="section-heading">
+                    <div>
+                        <span class="eyebrow">המקום שלכם מחכה</span>
+                        <h2>בחרו את הכיסא שלכם</h2>
+                    </div>
+
+                    <button type="button"
+                        id="refresh-seats"
+                        class="btn btn-outline btn-small">
+                        רענון מקומות
+                    </button>
+                </div>
+
+                <div id="seat-message" hidden></div>
+
+                <div id="seat-map"></div>
+            </section>
+
+            <aside class="panel event-summary">
+                <span class="eyebrow">פרטי האירוע</span>
+
+                <h1 id="event-name"></h1>
+
+                <p id="event-description"
+                    class="event-summary-description"></p>
+
+                <div class="event-meta">
+                    <span>
+                        <strong>אולם:</strong>
+                        <span id="hall-name"></span>
+                    </span>
+
+                    <span>
+                        <strong>תאריך:</strong>
+                        <span id="event-date"></span>
+                    </span>
+
+                    <span>
+                        <strong>שעות:</strong>
+                        <bdi id="event-time"></bdi>
+                    </span>
+
+                    <span>
+                        <strong>מקומות פנויים:</strong>
+                        <span id="available-count"></span>
+                    </span>
+                </div>
+
+                <div class="selection-summary">
+                    <strong>המקום שבחרתם</strong>
+                    <p id="selected-seat">
+                        טרם נבחר כיסא
+                    </p>
+                </div>
+
+                <button type="button"
+                    id="book-button"
+                    class="btn btn-gold btn-block"
+                    disabled>
+                    אישור הזמנה
+                </button>
+
+                <p id="booking-note" class="muted"></p>
+
+                <div id="booking-message" hidden></div>
+            </aside>
+        </div>
+
+        <dialog id="success-dialog" class="app-dialog">
+            <div class="dialog-content text-center stack">
+                <span class="eyebrow">ההזמנה הושלמה</span>
+
+                <h2 class="text-success">
+                    המקום שלכם שמור!
+                </h2>
+
+                <p id="confirmation-details"></p>
+
+                <div class="stack">
+                    <button type="button"
+                        id="book-another"
+                        class="btn btn-primary">
+                        הזמנת כיסא נוסף
+                    </button>
+
+                    <a href="bookings.html"
+                        class="btn btn-outline">
+                        מעבר להזמנות שלי
+                    </a>
+                </div>
+            </div>
+        </dialog>
+    </main>
+
+    <footer id="site-footer"></footer>
+
+    <script type="module" src="js/event.js"></script>
+</body>
+</html>

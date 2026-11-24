@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventTicketing | מרכז הניהול</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+</head>
+<body>
+    <header id="site-header"></header>
+
+    <main class="container page-section" id="admin-content" hidden>
+        <div class="page-heading">
+            <span class="eyebrow">מרכז הבקרה</span>
+            <h1>ניהול המערכת</h1>
+            <p>ניהול האירועים, האולמות והמקומות במערכת.</p>
+        </div>
+
+        <nav class="admin-tabs" aria-label="ניהול המערכת">
+            <button type="button" class="admin-tab btn btn-primary active"
+                data-tab="events">
+                ניהול אירועים
+            </button>
+
+            <button type="button" class="admin-tab btn btn-outline"
+                data-tab="halls">
+                ניהול אולמות
+            </button>
+
+            <button type="button" class="admin-tab btn btn-outline"
+                data-tab="seats">
+                שריון מקומות
+            </button>
+        </nav>
+
+        <div id="admin-message" hidden></div>
+
+        <section id="events-panel" class="panel admin-panel">
+            <div class="section-heading">
+                <h2>כל האירועים</h2>
+                <button type="button" id="create-event" class="btn btn-gold">
+                    יצירת אירוע חדש
+                </button>
+            </div>
+
+            <form id="event-filters" class="filters">
+                <div class="form-group">
+                    <label for="event-search">חיפוש אירועים</label>
+                    <input type="search" id="event-search"
+                        name="search" class="form-control"
+                        placeholder="שם האירוע">
+                </div>
+
+                <div class="form-group">
+                    <label for="filter-hall">אולם</label>
+                    <select id="filter-hall" name="hallId"
+                        class="form-control">
+                        <option value="">כל האולמות</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="filter-status">סטטוס</label>
+                    <select id="filter-status" name="status"
+                        class="form-control">
+                        <option value="">כל הסטטוסים</option>
+                        <option value="1">פעיל</option>
+                        <option value="2">מבוטל</option>
+                        <option value="3">הסתיים</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="event-sort">סדר הצגה</label>
+                    <select id="event-sort" name="descending"
+                        class="form-control">
+                        <option value="false">תאריך עולה</option>
+                        <option value="true">תאריך יורד</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">חיפוש</button>
+                <button type="reset" class="btn btn-outline">איפוס</button>
+            </form>
+
+            <div id="events-table" aria-live="polite"></div>
+
+            <nav id="events-pagination" class="pagination"
+                aria-label="עמודי אירועים"></nav>
+        </section>
+
+        <section id="halls-panel" class="panel admin-panel" hidden>
+            <div class="section-heading">
+                <h2>ניהול אולמות</h2>
+
+                <button type="button" id="create-hall" class="btn btn-gold">
+                    יצירת אולם חדש
+                </button>
+            </div>
+
+            <div id="halls-table" aria-live="polite"></div>
+        </section>
+
+        <section id="seats-panel" class="panel admin-panel" hidden>
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">ניהול מקומות</span>
+                    <h2>שריון ושחרור כיסאות</h2>
+                </div>
+            </div>
+
+            <div class="filters">
+                <div class="form-group">
+                    <label for="seat-event-search">חיפוש אירוע פעיל</label>
+                    <input type="search" id="seat-event-search"
+                        class="form-control" placeholder="שם האירוע">
+                </div>
+
+                <div class="form-group">
+                    <label for="seat-event">בחירת אירוע</label>
+                    <select id="seat-event" class="form-control">
+                        <option value="">בחרו אירוע</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="seat-mode">סוג פעולה</label>
+                    <select id="seat-mode" class="form-control">
+                        <option value="reserve">שריון כיסאות</option>
+                        <option value="release">שחרור כיסאות</option>
+                    </select>
+                </div>
+
+                <button type="button" id="refresh-admin-seats"
+                    class="btn btn-outline" disabled>
+                    רענון מקומות
+                </button>
+            </div>
+
+            <nav id="seat-events-pagination" class="pagination"
+                aria-label="עמודי אירועים לשריון"></nav>
+
+            <div id="seat-event-details" class="muted"></div>
+            <div id="admin-seat-message" hidden></div>
+            <div id="admin-seat-map"></div>
+
+            <div class="selection-summary">
+                <strong>הכיסאות שנבחרו</strong>
+                <p id="admin-selected-seats">טרם נבחרו כיסאות</p>
+            </div>
+
+            <button type="button" id="apply-seat-action"
+                class="btn btn-gold" disabled>
+                אישור שריון
+            </button>
+        </section>
+
+        <dialog id="event-dialog" class="app-dialog">
+            <div class="dialog-content">
+                <h2 id="event-dialog-title">יצירת אירוע</h2>
+
+                <form id="event-form" class="stack">
+                    <div id="event-form-message" hidden></div>
+
+                    <div class="form-group">
+                        <label for="event-name">שם האירוע</label>
+                        <input type="text" id="event-name"
+                            name="name" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="event-description">תיאור האירוע</label>
+                        <textarea id="event-description"
+                            name="description" class="form-control"
+                            rows="4"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="event-hall">אולם</label>
+                        <select id="event-hall" name="hallId"
+                            class="form-control" required></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="event-start">מועד התחלה</label>
+                        <input type="datetime-local" id="event-start"
+                            name="startTime" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="event-end">מועד סיום</label>
+                        <input type="datetime-local" id="event-end"
+                            name="endTime" class="form-control" required>
+                    </div>
+
+                    <small class="muted">
+                        השעות הן לפי שעון ישראל. האירוע חייב להתחיל
+                        ולהסתיים באותו יום, ולהתחיל בשעה 08:00 או מאוחר יותר.
+                    </small>
+
+                    <div id="event-edit-note" class="muted" hidden></div>
+
+                    <div class="dialog-actions">
+                        <button type="button" class="btn btn-outline"
+                            data-close-dialog="event-dialog">
+                            חזרה
+                        </button>
+
+                        <button type="submit" class="btn btn-primary">
+                            שמירת אירוע
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </dialog>
+
+        <dialog id="hall-dialog" class="app-dialog">
+            <div class="dialog-content">
+                <h2 id="hall-dialog-title">יצירת אולם</h2>
+
+                <form id="hall-form" class="stack">
+                    <div id="hall-form-message" hidden></div>
+
+                    <div class="form-group">
+                        <label for="hall-name">שם האולם</label>
+                        <input type="text" id="hall-name" name="name"
+                            class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hall-seat-count">מספר כיסאות</label>
+                        <input type="number" id="hall-seat-count"
+                            name="seatCount" min="1" step="1"
+                            class="form-control" required>
+
+                        <small class="muted">
+                            מספר הכיסאות נקבע ביצירת האולם
+                            ולא ניתן לשנותו לאחר מכן.
+                        </small>
+                    </div>
+
+                    <div class="dialog-actions">
+                        <button type="button" class="btn btn-outline"
+                            data-close-dialog="hall-dialog">
+                            חזרה
+                        </button>
+
+                        <button type="submit" class="btn btn-primary">
+                            שמירת אולם
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </dialog>
+    </main>
+
+    <footer id="site-footer"></footer>
+
+    <script type="module" src="js/admin.js"></script>
+</body>
+</html>

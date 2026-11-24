@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="גלו אירועים ובחרו את המקום שלכם בקלות.">
+    <title>EventTicketing | כל האירועים</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+</head>
+<body>
+    <header id="site-header"></header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <span class="eyebrow" dir="ltr">
+                        EVENTTICKETING
+                    </span>
+
+                    <h1>
+                        האירוע הבא שלך.<br>
+                        <span>המקום שלך.</span>
+                    </h1>
+
+                    <p>
+                        גלו את האירועים הקרובים, בחרו את המקום
+                        המתאים לכם והזמינו בקלות ובנוחות.
+                    </p>
+
+                    <div class="actions">
+                        <a href="#events" class="btn btn-gold">
+                            גלו את האירועים
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container page-section" id="events">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">בחרו את האירוע שלכם</span>
+                    <h2>האירועים הקרובים</h2>
+                </div>
+
+                <span id="events-count" class="muted"
+                    aria-live="polite"></span>
+            </div>
+
+            <form id="filters-form" class="filters">
+                <div class="form-group search-field">
+                    <label for="search">חיפוש אירועים</label>
+                    <input
+                        type="search"
+                        id="search"
+                        name="search"
+                        class="form-control"
+                        placeholder="חפשו לפי שם האירוע..."
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="sort">סדר הצגה</label>
+                    <select id="sort" name="sort" class="form-control">
+                        <option value="false">הקרובים ביותר</option>
+                        <option value="true">הרחוקים ביותר</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    חיפוש
+                </button>
+
+                <button type="reset" class="btn btn-outline">
+                    איפוס
+                </button>
+            </form>
+
+            <div id="events-grid" class="event-grid"
+                aria-live="polite"></div>
+
+            <nav id="pagination" class="pagination"
+                aria-label="עמודי אירועים"></nav>
+        </section>
+    </main>
+
+    <footer id="site-footer"></footer>
+
+    <script type="module" src="js/events.js"></script>
+</body>
+</html>

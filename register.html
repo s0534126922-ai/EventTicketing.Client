@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventTicketing | הרשמה</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+</head>
+<body>
+    <header id="site-header"></header>
+    <main class="auth-section">
+        <section class="auth-card">
+            <div class="auth-heading">
+                <span class="eyebrow" dir="ltr">EVENTTICKETING</span>
+                <h1>המקום שלכם מחכה</h1>
+                <p>פתחו חשבון והתחילו להזמין מקומות לאירועים.</p>
+            </div>
+            <form id="auth-form" data-mode="register" class="stack">
+                <div id="form-message" hidden></div>
+                <div class="form-group">
+    <label for="name">שם מלא</label>
+    <input type="text" id="name" name="name"
+        class="form-control" autocomplete="name"
+        maxlength="100" placeholder="הזינו שם מלא" required>
+</div>
+                <div class="form-group">
+                    <label for="email">כתובת דוא"ל</label>
+                    <input type="email" id="email" name="email"
+                        class="form-control" autocomplete="email"
+                        maxlength="256" placeholder="name@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">סיסמה</label>
+                    <input type="password" id="password" name="password"
+                        class="form-control" autocomplete="new-password"
+                        minlength="8" required>
+                    <small>הסיסמה חייבת להכיל לפחות 8 תווים.</small>
+                </div>
+                <div class="form-group">
+    <label for="confirm-password">אימות סיסמה</label>
+    <input type="password" id="confirm-password"
+        name="confirmPassword" class="form-control"
+        autocomplete="new-password" minlength="8" required>
+</div>
+                <button type="submit" class="btn btn-primary btn-block">
+                    יצירת חשבון
+                </button>
+            </form>
+            <div class="auth-footer">
+                כבר יש לכם חשבון?
+                <a href="login.html" class="text-link" id="switch-auth">
+                    התחברו כאן
+                </a>
+            </div>
+        </section>
+    </main>
+    <footer id="site-footer"></footer>
+    <script type="module" src="js/auth-page.js"></script>
+</body>
+</html>

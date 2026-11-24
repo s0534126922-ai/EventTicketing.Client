@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventTicketing | ההזמנות שלי</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+</head>
+<body>
+    <header id="site-header"></header>
+
+    <main class="container page-section">
+        <div class="section-heading">
+            <div class="page-heading">
+                <span class="eyebrow">האזור האישי</span>
+
+                <h1>ההזמנות שלי</h1>
+
+                <p>
+                    כל המקומות שהזמנתם, האירועים הקרובים
+                    והיסטוריית ההזמנות שלכם.
+                </p>
+            </div>
+
+            <a href="index.html" class="btn btn-primary">
+                לכל האירועים
+            </a>
+        </div>
+
+        <div id="bookings-message" hidden></div>
+
+        <div id="bookings-list"
+            class="stack"
+            aria-live="polite"></div>
+    </main>
+
+    <footer id="site-footer"></footer>
+
+    <script type="module" src="js/bookings.js"></script>
+</body>
+</html>

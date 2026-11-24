@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventTicketing | התחברות</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+</head>
+<body>
+    <header id="site-header"></header>
+    <main class="auth-section">
+        <section class="auth-card">
+            <div class="auth-heading">
+                <span class="eyebrow" dir="ltr">EVENTTICKETING</span>
+                <h1>טוב שחזרתם</h1>
+                <p>התחברו לחשבון שלכם והמשיכו להזמנת מקומות.</p>
+            </div>
+            <form id="auth-form" data-mode="login" class="stack">
+                <div id="form-message" hidden></div>
+                
+                <div class="form-group">
+                    <label for="email">כתובת דוא"ל</label>
+                    <input type="email" id="email" name="email"
+                        class="form-control" autocomplete="email"
+                        maxlength="256" placeholder="name@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">סיסמה</label>
+                    <input type="password" id="password" name="password"
+                        class="form-control" autocomplete="current-password"
+                         required>
+                    
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block">
+                    התחברות
+                </button>
+            </form>
+            <div class="auth-footer">
+                עדיין אין לכם חשבון?
+                <a href="register.html" class="text-link" id="switch-auth">
+                    הירשמו עכשיו
+                </a>
+            </div>
+        </section>
+    </main>
+    <footer id="site-footer"></footer>
+    <script type="module" src="js/auth-page.js"></script>
+</body>
+</html>
