@@ -3,7 +3,8 @@ import { api } from "./api.js";
 import {
     ROLES,
     EVENT_STATUS,
-    EVENT_STATUS_LABELS
+    EVENT_STATUS_LABELS,
+    BOOKING_STATUS_LABELS
 } from "./config.js";
 
 import { requireAuth } from "./auth.js";
@@ -242,6 +243,45 @@ function renderHalls() {
     );
 }
 
+async function showEventBookings(id) {
+    const event = events.find(item => item.id === id);
+    if (!event) return;
+
+    const dialog = $("event-bookings-dialog");
+    const container = $("event-bookings-table");
+    $("event-bookings-title").textContent = `הזמנות לאירוע ${event.name}`;
+
+    const request = new AbortController();
+    dialog.addEventListener("close", () => request.abort(), { once: true });
+    dialog.showModal();
+    showLoading(container);
+
+    try {
+        const bookings = await api.bookings.getForEvent(id, {
+            signal: request.signal
+        });
+
+        if (!bookings.length) {
+            showEmpty(container, "אין הזמנות לאירוע");
+            return;
+        }
+
+        const rows = bookings.map(({ booking, userName, userEmail }) => `
+            <tr>
+                <td>${escapeHtml(booking.id)}</td>
+                <td>${escapeHtml(booking.seatNumber)}</td>
+                <td>${escapeHtml(userName)}</td>
+                <td>${escapeHtml(userEmail)}</td>
+                <td>${escapeHtml(BOOKING_STATUS_LABELS[booking.status] || "לא ידוע")}</td>
+            </tr>
+        `);
+
+        renderTable(container, ["הזמנה", "כיסא", "שם", "דוא״ל", "סטטוס"], rows);
+    } catch (error) {
+        if (error.name !== "AbortError") showError(container, error);
+    }
+}
+
 function renderEvents() {
     if (!events.length) {
         showEmpty(
@@ -285,6 +325,8 @@ function renderEvents() {
 
             <td>
                 <div class="actions">
+                    ${actionButton("view-bookings", event.id, "הזמנות")}
+
                     ${canEditEvent(event)
                         ? actionButton(
                             "edit-event",
@@ -1308,6 +1350,10 @@ function bindEvents() {
             const id = Number(button.dataset.id);
 
             switch (button.dataset.action) {
+                case "view-bookings":
+                    showEventBookings(id);
+                    break;
+
                 case "edit-event":
                     openEventEditor(id);
                     break;

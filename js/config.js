@@ -1,3 +1,5 @@
+import { DEPLOYED_API_BASE_URL } from "./deployment.js";
+
 const isLocal = ["localhost", "127.0.0.1"].includes(
     window.location.hostname
 );
@@ -6,7 +8,7 @@ export const CONFIG = Object.freeze({
     APP_NAME: "EventTicketing",
     API_BASE_URL: isLocal
         ? "http://localhost:5066/api"
-        : "",
+        : DEPLOYED_API_BASE_URL,
     PAGE_SIZE: 10,
     SEATS_PER_ROW: 12,
     TIME_ZONE: "Asia/Jerusalem",
@@ -57,6 +59,7 @@ export const ENDPOINTS = Object.freeze({
     EVENT: id => `/events/${id}`,
     EVENT_STATUS: id => `/events/${id}/status`,
 
+    EVENT_BOOKINGS: id => `/events/${id}/bookings`,
     EVENT_SEATS: id => `/events/${id}/seats`,
     SEAT_RESERVATIONS: id =>
         `/events/${id}/seats/reservations`,
