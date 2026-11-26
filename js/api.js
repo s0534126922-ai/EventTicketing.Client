@@ -222,6 +222,9 @@ export const api = Object.freeze({
     },
 
     bookings: {
+        getForEvent: (id, options = {}) =>
+            request(ENDPOINTS.EVENT_BOOKINGS(id), options),
+
         create: eventSeatId =>
             request(ENDPOINTS.BOOKINGS, {
                 method: "POST",
@@ -241,8 +244,8 @@ export const api = Object.freeze({
     },
 
     halls: {
-        getAll: () =>
-            request(ENDPOINTS.HALLS),
+        getAll: options =>
+            request(ENDPOINTS.HALLS, options),
 
         get: id =>
             request(ENDPOINTS.HALL(id)),

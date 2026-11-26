@@ -257,6 +257,17 @@
 
     <footer id="site-footer"></footer>
 
+    <dialog id="event-bookings-dialog" class="app-dialog dialog-wide"
+        aria-labelledby="event-bookings-title">
+        <div class="dialog-content">
+            <h2 id="event-bookings-title"></h2>
+            <div id="event-bookings-table" aria-live="polite"></div>
+            <form method="dialog" class="dialog-actions">
+                <button class="btn btn-outline" type="submit">סגירה</button>
+            </form>
+        </div>
+    </dialog>
+
     <script type="module" src="js/admin.js"></script>
 </body>
 </html>

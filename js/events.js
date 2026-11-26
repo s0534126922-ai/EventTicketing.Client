@@ -17,6 +17,7 @@ renderLayout();
 
 const form = document.getElementById("filters-form");
 const searchInput = document.getElementById("search");
+const hallInput = document.getElementById("hall");
 const sortInput = document.getElementById("sort");
 const grid = document.getElementById("events-grid");
 const pagination = document.getElementById("pagination");
@@ -126,6 +127,7 @@ async function loadEvents(page = 1) {
     try {
         const data = await api.events.search({
             search: searchInput.value.trim(),
+            hallId: hallInput.value || undefined,
             descending: sortInput.value === "true",
             pageNumber: page
         }, {
@@ -184,4 +186,20 @@ searchInput.addEventListener("input", searchEvents);
 
 sortInput.addEventListener("change", () => loadEvents(1));
 
+hallInput.addEventListener("change", () => loadEvents(1));
+
+async function loadHallOptions() {
+    try {
+        const halls = await api.halls.getAll({ authenticated: false });
+
+        for (const hall of halls) {
+            hallInput.add(new Option(hall.name, hall.id));
+        }
+    } catch {
+        hallInput.disabled = true;
+        hallInput.options[0].textContent = "סינון לפי אולם אינו זמין";
+    }
+}
+
+loadHallOptions();
 loadEvents();
